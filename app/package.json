@@ -1,7 +1,6 @@
 {
   "name": "bootcamp-cicd-demo",
   "version": "1.0.0",
-  "description": "Sample Node.js app for Azure DevOps CI/CD demo",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

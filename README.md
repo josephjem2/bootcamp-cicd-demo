@@ -1,15 +1,26 @@
-# 🚀 Bootcamp CI/CD Demo
+# Bootcamp CI/CD Demo
 
-Sample Node.js app for Azure DevOps CI/CD Hands-on Challenge Day.
-
-## Setup
-
-1. Clone this repo
-2. Run `npm install` in the app directory
-3. Start the app with `npm start`
+This is a sample Node.js web app for the Azure DevOps CI/CD Hands-on Challenge Day.
 
 ## Prerequisites
 
-- Node.js v14+
+- Node.js (v14+)
 - Azure DevOps account
-- Azure App Service
+- Azure App Service (Web App)
+
+## Setup Instructions
+
+1. Clone this repo:
+   git clone https://github.com/YOUR-USERNAME/bootcamp-cicd-demo.git
+
+2. Install dependencies:
+   cd bootcamp-cicd-demo/app
+   npm install
+
+3. Run locally:
+   npm start
+
+## CI/CD Pipeline Overview
+
+- Build Pipeline: Installs dependencies, builds the app, and publishes artifacts.
+- Release Pipeline: Deploys the app to Azure App Service.
