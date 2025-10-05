@@ -11,7 +11,7 @@ This is a sample Node.js web app for the Azure DevOps CI/CD Hands-on Challenge D
 ## Setup Instructions
 
 1. Clone this repo:
-   git clone https://github.com/YOUR-USERNAME/bootcamp-cicd-demo.git
+   git clone https://github.com/josephjem2/bootcamp-cicd-demo.git
 
 2. Install dependencies:
    cd bootcamp-cicd-demo/app
