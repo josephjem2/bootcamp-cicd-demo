@@ -21,7 +21,7 @@ This repository contains a sample Node.js web application used for the Azure Dev
 2. Install dependencies:
 =======
 1. Clone this repository:
-   git clone https://github.com/YOUR-USERNAME/bootcamp-cicd-demo.git
+   git clone https://github.com/josephjem2/bootcamp-cicd-demo.git
 2. Navigate to the project folder:
 >>>>>>> b05cea7 (Update README with badges and Azure DevOps instructions)
    cd bootcamp-cicd-demo/app
