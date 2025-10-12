@@ -5,7 +5,7 @@
 
 This repository contains a sample Node.js web application used for the Azure DevOps CI/CD Hands-on Challenge Day.
 
-🎯 Objective
+## Objective
 Automate the build and deployment of a Node.js web application to Azure App Service using Azure DevOps.
 
 ## Prerequisites
