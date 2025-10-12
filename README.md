@@ -17,20 +17,13 @@ Automate the build and deployment of a Node.js web application to Azure App Serv
 
 ## Setup Instructions
 
-<<<<<<< HEAD
-1. Clone this repo:
-   git clone https://github.com/josephjem2/bootcamp-cicd-demo.git
-
-2. Install dependencies:
+Install dependencies:
 =======
 1. Clone this repository:
    git clone https://github.com/josephjem2/bootcamp-cicd-demo.git
-2. Navigate to the project folder:
->>>>>>> b05cea7 (Update README with badges and Azure DevOps instructions)
-   cd bootcamp-cicd-demo/app
-3. Install dependencies:
+2. Install dependencies:
    npm install
-4. Run the app locally:
+3. Run the app locally:
    npm start
 
 ## CI/CD Pipeline Overview
