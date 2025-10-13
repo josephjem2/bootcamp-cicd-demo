@@ -18,3 +18,10 @@ steps:
   - script: |
       npm start
     displayName: 'Start application'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(System.DefaultWorkingDirectory)'
+      artifactName: 'drop'
+      publishLocation: 'Container'
+    displayName: 'Publish Build Artifacts'
