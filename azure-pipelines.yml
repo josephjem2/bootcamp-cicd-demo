@@ -21,9 +21,14 @@ steps:
       npm start
     displayName: 'Start application'
 
+  - script: |
+      echo "Publishing contents of $(System.DefaultWorkingDirectory)/app"
+    displayName: 'Log artifact path'
+
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: '$(System.DefaultWorkingDirectory)/app'
       artifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish Build Artifacts'
+    condition: succeeded()
