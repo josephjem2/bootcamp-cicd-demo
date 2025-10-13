@@ -22,8 +22,8 @@ steps:
     displayName: 'Start application'
 
   - script: |
-      echo "Publishing contents of $(System.DefaultWorkingDirectory)/app"
-    displayName: 'Log artifact path'
+      dir $(System.DefaultWorkingDirectory)/app
+    displayName: 'List files in app folder'
 
   - task: PublishBuildArtifacts@1
     inputs:
