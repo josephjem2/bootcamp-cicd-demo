@@ -12,16 +12,18 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
+      cd app
       npm install
     displayName: 'Install dependencies'
 
   - script: |
+      cd app
       npm start
     displayName: 'Start application'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(System.DefaultWorkingDirectory)'
+      pathToPublish: '$(System.DefaultWorkingDirectory)/app'
       artifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish Build Artifacts'
