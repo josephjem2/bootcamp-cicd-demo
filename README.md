@@ -1,271 +1,224 @@
-# Bootcamp CI/CD Demo
+# 🚀 Bootcamp CI/CD Demo
 
 ![Node.js Version](https://img.shields.io/badge/Node.js-14.x-green)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 
-This repository contains a sample Node.js web application used for the Azure DevOps CI/CD Hands-on Challenge Day.
+This is a sample Node.js web application created for the Azure DevOps CI/CD Hands-on Challenge Day. It demonstrates how to automate the build and deployment of a web app using Azure DevOps pipelines.
 
-## Objective
-Automate the build and deployment of a Node.js web application to Azure App Service using Azure DevOps.
-<<<<<<< HEAD
+---
 
-## Prerequisites
-=======
->>>>>>> 023b211 (Update README with lab guide, best practices, and YAML pipeline)
-
-## Prerequisites
+## 📦 Prerequisites
 - Node.js (v14 or higher)
+- Git installed locally
+- GitHub account
 - Azure DevOps account
-- Azure App Service (Web App)
-- Git
+- Azure Subscription with App Service created
 
-## Setup Instructions
-<<<<<<< HEAD
+---
 
-Install dependencies:
-=======
-=======
->>>>>>> 023b211 (Update README with lab guide, best practices, and YAML pipeline)
+## 🛠️ Setup Instructions
 1. Clone this repository:
    ```bash
-   git clone https://github.com/josephjem2/bootcamp-cicd-demo.git
-<<<<<<< HEAD
-2. Install dependencies:
-   npm install
-3. Run the app locally:
-=======
+   git clone https://github.com/YOUR-USERNAME/bootcamp-cicd-demo.git
+   cd bootcamp-cicd-demo
    ```
 2. Install dependencies:
    ```bash
+   cd app
    npm install
    ```
 3. Run the app locally:
    ```bash
->>>>>>> 023b211 (Update README with lab guide, best practices, and YAML pipeline)
    npm start
    ```
 
-## CI/CD Pipeline Overview
+---
+
+## 🌐 Upload Project to GitHub
+1. Create a new repository on GitHub.
+2. In your terminal:
+   ```bash
+   git init
+   git remote add origin https://github.com/YOUR-USERNAME/bootcamp-cicd-demo.git
+   git add .
+   git commit -m "Initial commit"
+   git push -u origin main
+   ```
+
+---
+
+## 🔧 CI/CD Pipeline Overview
 - **Build Pipeline**: Installs dependencies, builds the app, and publishes artifacts.
 - **Release Pipeline**: Deploys the app to Azure App Service.
 
-## Azure DevOps Setup Steps
-1. Create a new project in Azure DevOps.
-2. Import this repository into Azure Repos or connect to GitHub.
-3. Create a build pipeline using `azure-pipelines.yml`.
-4. Create a release pipeline to deploy to Azure App Service.
-5. Configure triggers to automate deployments.
+---
 
-## Deployed App
-Visit the deployed app at: `https://your-app-service-url.azurewebsites.net`
+## 🧪 Azure DevOps CI/CD Lab Guide
 
-<<<<<<< HEAD
-Visit the deployed app at: https://your-app-service-url.azurewebsites.net
+### 🎯 Objective
+Automate the build and deployment of a Node.js web application to Azure App Service using Azure DevOps.
 
-🔧 Lab Steps
-Step 1: Set Up Azure DevOps Project
+### 🔧 Lab Steps
 
-Go to https://dev.azure.com and sign in.
-Click New Project.
-Name it: bootcamp-cicd-demo.
-Set visibility to Private or Public as needed.
-Click Create.
-
-
-Step 2: Import Code into Azure Repos
-
-Navigate to Repos in your Azure DevOps project.
-Click Import.
-Paste your GitHub repo URL:
-https://github.com/YOUR-USERNAME/bootcamp-cicd-demo.git
-Click Import.
-
-
-Step 3: Create a Build Pipeline
-
-Go to Pipelines → Create Pipeline.
-Select Azure Repos Git and choose your repository.
-Choose YAML and select azure-pipelines.yml from the repo.
-Review the pipeline steps:
-
-Install Node.js
-Install dependencies
-Build the app
-Publish artifacts
-
-
-Click Run to execute the pipeline.
-Confirm the build completes successfully.
-
-
-Step 4: Create a Release Pipeline
-
-Go to Pipelines → Releases → New Pipeline.
-Add an Artifact:
-
-Source: Select your build pipeline.
-Source alias: drop
-
-
-Add a Stage: “Deploy to Azure App Service”.
-Click Add → Azure App Service Deploy.
-Configure:
-
-Azure subscription (authorize if needed)
-App type: Web App on Linux
-App name: Select your existing App Service
-
-
-Save and create a release.
-
-
-Step 5: Trigger and Monitor
-
-Make a change in the code (e.g., update index.html).
-Commit and push to the repo:
-Shellgit add .git commit -m "Update homepage"git push origin mainShow more lines
-
-Watch the build pipeline trigger automatically.
-Once the build completes, the release pipeline will deploy the app.
-Visit your Azure App Service URL to verify the update.
-
-
-✅ CI/CD Best Practices
-🔁 Version Control
-
-Use feature branches for development.
-Protect the main or release branches with pull request policies.
-Tag releases with semantic versioning (e.g., v1.0.0).
-
-🧪 Automated Testing
-
-Include unit tests in your build pipeline.
-Use tools like Jest, Mocha, or Supertest for Node.js.
-Fail the build if tests do not pass.
-
-📦 Artifact Management
-
-Publish build artifacts to a secure location.
-Use versioned artifacts to track deployments.
-
-🚀 Environment Separation
-
-Use separate pipelines or stages for Dev, Test, and Prod.
-Apply approval gates before deploying to production.
-
-🔐 Secrets & Security
-
-Store secrets in Azure Key Vault or Pipeline Variables (marked as secret).
-Never hard-code credentials or tokens in your code or YAML files.
-
-📊 Monitoring & Logging
-
-Enable logging in your application.
-Use Azure Monitor, App Insights, or Log Analytics to track performance and errors.
-
-🔄 Pipeline Triggers
-
-Use continuous integration (CI) to trigger builds on code changes.
-Use continuous deployment (CD) to automate releases after successful builds.
-
-📁 Pipeline as Code
-
-Define pipelines using YAML (azure-pipelines.yml) for version control and reuse.
-Keep pipeline files in the root of your repo or in a .azure-pipelines/ folder.
-
-🧹 Clean Builds
-
-Use clean build agents or containers to avoid dependency pollution.
-Cache dependencies smartly to speed up builds without compromising isolation.
-=======
-## 🔧 Lab Steps
-### Step 1: Set Up Azure DevOps Project
+#### Step 1: Set Up Azure DevOps Project
 - Go to https://dev.azure.com and sign in.
-- Click New Project.
+- Click **New Project**.
 - Name it: `bootcamp-cicd-demo`.
-- Set visibility to Private or Public as needed.
-- Click Create.
+- Set visibility to Private or Public.
+- Click **Create**.
 
-### Step 2: Import Code into Azure Repos
-- Navigate to Repos in your Azure DevOps project.
-- Click Import.
-- Paste your GitHub repo URL:
-  `https://github.com/YOUR-USERNAME/bootcamp-cicd-demo.git`
-- Click Import.
+#### Step 2: Import Code into Azure Repos
+- Navigate to **Repos**.
+- Click **Import**.
+- Paste your GitHub repo URL.
+- Click **Import**.
 
-### Step 3: Create a Build Pipeline
-- Go to Pipelines → Create Pipeline.
-- Select Azure Repos Git and choose your repository.
-- Choose YAML and select `azure-pipelines.yml` from the repo.
-- Review the pipeline steps:
-  - Install Node.js
-  - Install dependencies
-  - Build the app
-  - Publish artifacts
-- Click Run to execute the pipeline.
-- Confirm the build completes successfully.
+#### Step 3: Create a Build Pipeline
+- Go to **Pipelines** → **Create Pipeline**.
+- Select **Azure Repos Git** and choose your repository.
+- Choose **YAML** and select `azure-pipelines.yml`.
+- Click **Run**.
 
-### Step 4: Create a Release Pipeline
-- Go to Pipelines → Releases → New Pipeline.
-- Add an Artifact:
-  - Source: Select your build pipeline.
-  - Source alias: `drop`
-- Add a Stage: “Deploy to Azure App Service”.
-- Click Add → Azure App Service Deploy.
-- Configure:
-  - Azure subscription (authorize if needed)
-  - App type: Web App on Linux
-  - App name: Select your existing App Service
+#### Step 4: Create a Release Pipeline
+- Go to **Pipelines** → **Releases** → **New Pipeline**.
+- Add an **Artifact** from the build pipeline.
+- Add a **Stage**: “Deploy to Azure App Service”.
+- Configure Azure subscription and App Service.
 - Save and create a release.
 
-### Step 5: Trigger and Monitor
-- Make a change in the code (e.g., update `index.html`).
-- Commit and push to the repo:
-  ```bash
-  git add .
-  git commit -m "Update homepage"
-  git push origin main
-  ```
-- Watch the build pipeline trigger automatically.
-- Once the build completes, the release pipeline will deploy the app.
-- Visit your Azure App Service URL to verify the update.
+#### Step 5: Trigger and Monitor
+- Make a code change and push:
+   ```bash
+   git add .
+   git commit -m "Update homepage"
+   git push origin main
+   ```
+- Watch the build and release pipelines run.
+- Visit the App Service URL to verify deployment.
+
+---
 
 ## ✅ CI/CD Best Practices
+
 ### 🔁 Version Control
-- Use feature branches for development.
-- Protect the main or release branches with pull request policies.
-- Tag releases with semantic versioning (e.g., `v1.0.0`).
+- Use feature branches.
+- Protect main/release branches.
+- Tag releases with semantic versioning.
 
 ### 🧪 Automated Testing
-- Include unit tests in your build pipeline.
-- Use tools like Jest, Mocha, or Supertest for Node.js.
-- Fail the build if tests do not pass.
+- Include unit tests.
+- Use Jest, Mocha, or Supertest.
+- Fail builds on test failure.
 
 ### 📦 Artifact Management
-- Publish build artifacts to a secure location.
-- Use versioned artifacts to track deployments.
+- Publish artifacts securely.
+- Use versioned artifacts.
 
 ### 🚀 Environment Separation
-- Use separate pipelines or stages for Dev, Test, and Prod.
-- Apply approval gates before deploying to production.
+- Separate Dev, Test, and Prod stages.
+- Use approval gates.
 
 ### 🔐 Secrets & Security
-- Store secrets in Azure Key Vault or Pipeline Variables (marked as secret).
-- Never hard-code credentials or tokens in your code or YAML files.
+- Use Azure Key Vault or secret variables.
+- Never hard-code credentials.
 
 ### 📊 Monitoring & Logging
-- Enable logging in your application.
-- Use Azure Monitor, App Insights, or Log Analytics to track performance and errors.
+- Enable logging.
+- Use Azure Monitor or App Insights.
 
 ### 🔄 Pipeline Triggers
-- Use continuous integration (CI) to trigger builds on code changes.
-- Use continuous deployment (CD) to automate releases after successful builds.
+- Use CI for code changes.
+- Use CD for automated releases.
 
 ### 📁 Pipeline as Code
-- Define pipelines using YAML (`azure-pipelines.yml`) for version control and reuse.
-- Keep pipeline files in the root of your repo or in a `.azure-pipelines/` folder.
+- Use YAML (`azure-pipelines.yml`).
+- Store in repo root or `.azure-pipelines/`.
 
 ### 🧹 Clean Builds
-- Use clean build agents or containers to avoid dependency pollution.
-- Cache dependencies smartly to speed up builds without compromising isolation.
->>>>>>> 023b211 (Update README with lab guide, best practices, and YAML pipeline)
+- Use clean agents.
+- Cache dependencies smartly.
+
+---
+
+## 🧰 Troubleshooting Guide
+
+### 🔁 Git Issues
+#### Merge Conflicts
+- Open conflicted file.
+- Remove conflict markers.
+- Stage and continue rebase:
+   ```bash
+   git add README.md
+   git rebase --continue
+   ```
+
+#### Push Rejected
+- Run:
+   ```bash
+   git pull origin main --rebase
+   git push origin main
+   ```
+
+### 🛠️ Pipeline Issues
+#### Pipeline Not Triggering
+- Ensure `azure-pipelines.yml` is in repo root.
+- Confirm `trigger:` includes your branch.
+
+#### Build Pipeline Fails
+- Check logs.
+- Validate YAML.
+- Confirm Node.js version.
+
+### 🚀 Deployment Issues
+#### App Service Deployment Fails
+- Verify subscription and App Service name.
+- Ensure App Service is running.
+
+#### Permission Denied
+- Check GitHub and Azure credentials.
+- Ensure service connection has access.
+
+### 📦 Artifact Issues
+#### Missing Artifacts
+- Confirm build pipeline publishes artifacts.
+- Use correct alias in release pipeline.
+
+---
+
+## 📄 Sample Azure DevOps YAML Pipeline
+```yaml
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install
+      npm run build
+    displayName: 'Install dependencies and build'
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: 'app'
+      Contents: '**'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    displayName: 'Copy files to staging'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'drop'
+      publishLocation: 'Container'
+    displayName: 'Publish build artifacts'
+```
+
+---
+
+For questions or support, contact your instructor or refer to the Azure DevOps documentation.
