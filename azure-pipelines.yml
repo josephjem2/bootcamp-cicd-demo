@@ -12,15 +12,13 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
-      cd app
       npm install
     displayName: 'Install dependencies'
 
   - script: |
-      cd app
       node app.js
     displayName: 'Start application using app.js'
 
   - script: |
-      dir $(Build.SourcesDirectory)/app
-    displayName: 'List files in app folder'
+      dir $(Build.SourcesDirectory)
+    displayName: 'List files in root folder'
