@@ -3,10 +3,10 @@ trigger:
 
 # Use your self-hosted agent pool
 pool:
-  name: 'Default'   # replace with the pool name where your agent is registered
+  name: 'Default'   # replace with your actual pool name
 
 variables:
-  azureServiceConnection: 'AzureBootcampConnection'   # service connection name from Project Settings
+  azureServiceConnection: 'AzureBootcampConnection'   # service connection name
   appServiceName: 'bootcamp-cicd-demo-app'            # your App Service name
 
 stages:
@@ -64,16 +64,16 @@ stages:
     - task: DownloadPipelineArtifact@2
       inputs:
         artifactName: 'drop'
-        path: '$(System.DefaultWorkingDirectory)'
+        path: '$(Pipeline.Workspace)'
       displayName: 'Download build artifact'
 
-    # Debug step to confirm the artifact is present
-    - script: dir "$(System.DefaultWorkingDirectory)\drop"
+    # Debug step to confirm artifact presence
+    - script: dir "$(Pipeline.Workspace)\drop"
       displayName: 'List downloaded files (debug)'
 
     - task: AzureWebApp@1
       inputs:
-        azureSubscription: '$(azureServiceConnection)'   # must match your service connection name
-        appName: '$(appServiceName)'                     # must match your App Service name
-        package: '$(System.DefaultWorkingDirectory)/drop/app.zip'
+        azureSubscription: '$(azureServiceConnection)'
+        appName: '$(appServiceName)'
+        package: '$(Pipeline.Workspace)/drop/app.zip'
       displayName: 'Deploy to Azure App Service'
