@@ -18,8 +18,8 @@ steps:
 
   - script: |
       cd app
-      npm start
-    displayName: 'Start application'
+      node app.js
+    displayName: 'Start application using app.js'
 
   - script: |
       dir $(Build.SourcesDirectory)/app
