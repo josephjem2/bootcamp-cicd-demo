@@ -1,7 +1,6 @@
 trigger:
 - main   # or your default branch
 
-# Use your self-hosted agent pool
 pool:
   name: 'Default'   # replace with your actual pool name
 
@@ -26,12 +25,10 @@ stages:
         versionSpec: '20.x'
       displayName: 'Install Node.js'
 
-    - script: |
-        npm install
+    - script: npm install
       displayName: 'Install npm packages'
 
-    - script: |
-        npm test
+    - script: npm test
       displayName: 'Run tests'
 
     - task: ArchiveFiles@2
@@ -66,10 +63,6 @@ stages:
         artifactName: 'drop'
         targetPath: '$(Pipeline.Workspace)'
       displayName: 'Download build artifact'
-
-    # Debug step to confirm artifact presence
-    - script: dir "$(Pipeline.Workspace)\drop"
-      displayName: 'List downloaded files (debug)'
 
     - task: AzureWebApp@1
       inputs:
