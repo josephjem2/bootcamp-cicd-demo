@@ -67,6 +67,10 @@ stages:
         path: '$(System.DefaultWorkingDirectory)'
       displayName: 'Download build artifact'
 
+    # Debug step to confirm the artifact is present
+    - script: dir "$(System.DefaultWorkingDirectory)\drop"
+      displayName: 'List downloaded files (debug)'
+
     - task: AzureWebApp@1
       inputs:
         azureSubscription: '$(azureServiceConnection)'   # must match your service connection name
