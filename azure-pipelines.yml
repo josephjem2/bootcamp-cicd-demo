@@ -1,8 +1,5 @@
 trigger:
-- main   # replace with your actual default branch
-
-pool:
-  name: 'Default'   # or your self-hosted agent pool name
+- main   # replace with your default branch if different
 
 variables:
   azureServiceConnection: 'AzureBootcampConnection'   # your service connection name
@@ -17,7 +14,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      vmImage: 'ubuntu-latest'   # or your agent pool
+      name: 'Default'   # use your self-hosted agent pool
     steps:
     - task: NodeTool@0
       inputs:
@@ -30,10 +27,10 @@ stages:
     - script: npm test
       displayName: 'Run tests'
 
-    # 👇 Adjust this path if your app.js lives in /src
+    # 👇 Adjust rootFolderOrFile if app.js is not at repo root
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)/src'
+        rootFolderOrFile: '$(Build.SourcesDirectory)'
         includeRootFolder: false
         archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
         replaceExistingArchive: true
@@ -55,7 +52,7 @@ stages:
   jobs:
   - job: DeployJob
     pool:
-      vmImage: 'ubuntu-latest'
+      name: 'Default'   # use your self-hosted agent pool
     steps:
     - task: DownloadPipelineArtifact@2
       inputs:
