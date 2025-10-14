@@ -22,12 +22,12 @@ steps:
     displayName: 'Start application'
 
   - script: |
-      dir $(System.DefaultWorkingDirectory)/app
+      dir $(Build.SourcesDirectory)/app
     displayName: 'List files in app folder'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(System.DefaultWorkingDirectory)/app'
+      pathToPublish: '$(Build.SourcesDirectory)/app'
       artifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish Build Artifacts'
