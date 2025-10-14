@@ -1,0 +1,44 @@
+
+stages:
+- stage: ProvisionAndDeploy
+  displayName: Provision and Deploy App Service
+  jobs:
+  - job: DeployInfrastructure
+    displayName: Deploy Azure App Service Infrastructure
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'AzureConnection-bootcamp'
+        subscriptionId: '$(azureSubscriptionId)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: 'bootcamp-rg'
+        location: 'East US'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(System.DefaultWorkingDirectory)/_bootcamp-cicd-demo/drop/appservice-template.json'
+        overrideParameters: '-webAppName bootcamp-cicd-demo-app'
+        deploymentMode: 'Incremental'
+
+  - job: DeployApp
+    displayName: Deploy App to Staging Slot
+    dependsOn: DeployInfrastructure
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - download: current
+      artifact: drop
+
+    - task: AzureRmWebAppDeployment@5
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'AzureConnection-bootcamp'
+        appType: 'webApp'
+        WebAppName: 'bootcamp-cicd-demo-app'
+        deployToSlotOrASE: true
+        ResourceGroupName: 'bootcamp-rg'
+        SlotName: 'staging'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/drop/app.zip'
+        enableCustomDeployment: true
+        DeploymentType: 'webDeploy'
