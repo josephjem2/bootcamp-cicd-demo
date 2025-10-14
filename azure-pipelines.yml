@@ -15,10 +15,6 @@ steps:
       npm install
     displayName: 'Install dependencies'
 
-  - script: |
-      start /B node app.js
-    displayName: 'Start application using app.js in background'
-
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: '$(Build.SourcesDirectory)/app'
@@ -34,17 +30,3 @@ steps:
       artifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish app.zip as drop artifact'
-
-  - task: AzureRmWebAppDeployment@5
-    inputs:
-      ConnectionType: 'AzureRM'
-      azureSubscription: 'AzureConnection-bootcamp'
-      appType: 'webApp'
-      WebAppName: 'bootcamp-cicd-demo-app'
-      deployToSlotOrASE: true
-      ResourceGroupName: 'bootcamp-rg'
-      SlotName: 'staging'
-      packageForLinux: '$(System.DefaultWorkingDirectory)/drop/app.zip'
-      enableCustomDeployment: true
-      DeploymentType: 'webDeploy'
-    displayName: 'Deploy app.zip to Azure App Service staging slot'
