@@ -26,7 +26,7 @@ steps:
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
       replaceExistingArchive: true
-    displayName: 'Archive application files'
+    displayName: 'Archive app folder into app.zip'
 
   - task: PublishBuildArtifacts@1
     inputs:
@@ -48,3 +48,4 @@ steps:
       packageForLinux: '$(System.DefaultWorkingDirectory)/drop/app.zip'
       enableCustomDeployment: true
       DeploymentType: 'webDeploy'
+    displayName: 'Deploy to Azure App Service staging slot'
