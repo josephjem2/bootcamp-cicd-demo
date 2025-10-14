@@ -61,12 +61,13 @@ stages:
     - task: DownloadPipelineArtifact@2
       inputs:
         artifactName: 'drop'
-        targetPath: '$(Pipeline.Workspace)'
+        targetPath: '$(System.DefaultWorkingDirectory)'
       displayName: 'Download build artifact'
 
     - task: AzureWebApp@1
       inputs:
         azureSubscription: '$(azureServiceConnection)'
         appName: '$(appServiceName)'
-        package: '$(Pipeline.Workspace)/drop/app.zip'
+        # Use glob pattern to pick up any .zip in the working directory
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
       displayName: 'Deploy to Azure App Service'
