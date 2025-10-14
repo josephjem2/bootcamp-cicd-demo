@@ -26,7 +26,7 @@ steps:
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
       replaceExistingArchive: true
-    displayName: 'Archive app folder into app.zip'
+    displayName: 'Archive app folder to app.zip'
 
   - task: PublishBuildArtifacts@1
     inputs:
