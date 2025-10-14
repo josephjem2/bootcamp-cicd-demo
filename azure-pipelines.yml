@@ -1,9 +1,8 @@
-
 trigger:
   - main
 
 pool:
-  name: Default
+  name: Default  # Use 'Default' for self-hosted agent or 'Azure Pipelines' if hosted parallelism is granted
 
 steps:
   - task: NodeTool@0
@@ -12,12 +11,18 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
+      cd app
       npm install
-    displayName: 'Install dependencies'
+    displayName: 'Install dependencies in app folder'
+
+  - script: |
+      mkdir $(Build.ArtifactStagingDirectory)
+      powershell -Command "Compress-Archive -Path $(Build.SourcesDirectory)\app\* -DestinationPath $(Build.ArtifactStagingDirectory)\app.zip"
+    displayName: 'Create ZIP from app folder'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.SourcesDirectory)'
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'drop'
       publishLocation: 'Container'
-    displayName: 'Publish source folder as drop artifact'
+    displayName: 'Publish ZIP artifact'
