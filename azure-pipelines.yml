@@ -19,9 +19,18 @@ steps:
       start /B node app.js
     displayName: 'Start application using app.js in background'
 
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/app'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+      replaceExistingArchive: true
+    displayName: 'Archive application files'
+
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.SourcesDirectory)'
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'drop'
       publishLocation: 'Container'
     displayName: 'Publish Build Artifacts'
@@ -36,6 +45,6 @@ steps:
       deployToSlotOrASE: true
       ResourceGroupName: 'bootcamp-rg'
       SlotName: 'staging'
-      packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      packageForLinux: '$(System.DefaultWorkingDirectory)/drop/app.zip'
       enableCustomDeployment: true
       DeploymentType: 'webDeploy'
