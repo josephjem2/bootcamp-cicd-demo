@@ -64,12 +64,12 @@ stages:
     - task: DownloadPipelineArtifact@2
       inputs:
         artifactName: 'drop'
-        path: '$(Pipeline.Workspace)'
+        path: '$(System.DefaultWorkingDirectory)'
       displayName: 'Download build artifact'
 
     - task: AzureWebApp@1
       inputs:
         azureSubscription: '$(azureServiceConnection)'   # must match your service connection name
         appName: '$(appServiceName)'                     # must match your App Service name
-        package: '$(Pipeline.Workspace)/drop/app.zip'
+        package: '$(System.DefaultWorkingDirectory)/drop/app.zip'
       displayName: 'Deploy to Azure App Service'
