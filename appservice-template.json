@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "webAppName": {
+      "type": "string",
+      "defaultValue": "bootcamp-cicd-demo-app",
+      "metadata": {
+        "description": "Name of the Web App"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "East US",
+      "metadata": {
+        "description": "Location for all resources"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2022-03-01",
+      "name": "${{parameters.webAppName}}-plan",
+      "location": "${{parameters.location}}",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic",
+        "size": "B1",
+        "capacity": 1
+      },
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2022-03-01",
+      "name": "${{parameters.webAppName}}",
+      "location": "${{parameters.location}}",
+      "dependsOn": [
+        "${{parameters.webAppName}}-plan"
+      ],
+      "properties": {
+        "serverFarmId": "${{parameters.webAppName}}-plan",
+        "siteConfig": {
+          "linuxFxVersion": "NODE|18-lts"
+        }
+      }
+    }
+  ]
+}
