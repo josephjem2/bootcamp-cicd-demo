@@ -1,10 +1,12 @@
 {
   "name": "bootcamp-cicd-demo",
   "version": "1.0.0",
-  "description": "A simple Node.js app for Azure DevOps CI/CD pipeline demo",
+  "description": "A simple Node.js app for demonstrating CI/CD with Azure DevOps",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "echo 'Build step placeholder'",
+    "test": "echo 'No tests specified' && exit 0"
   },
   "author": "Joseph Essomba",
   "license": "MIT",
