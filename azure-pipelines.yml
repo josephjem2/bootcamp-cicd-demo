@@ -64,7 +64,7 @@ stages:
     - task: DownloadPipelineArtifact@2
       inputs:
         artifactName: 'drop'
-        path: '$(Pipeline.Workspace)'
+        targetPath: '$(Pipeline.Workspace)'
       displayName: 'Download build artifact'
 
     # Debug step to confirm artifact presence
