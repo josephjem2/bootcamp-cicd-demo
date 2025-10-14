@@ -1,12 +1,17 @@
 trigger:
 - main   # or your default branch
 
-# Use your self-hosted agent pool instead of Microsoft-hosted
+# Use your self-hosted agent pool
 pool:
   name: 'Default'   # replace with the pool name you registered your agent into
 
+variables:
+  # Bootcamp-friendly placeholders
+  azureServiceConnection: 'AzureBootcampConnection'   # service connection name from Project Settings
+  appServiceName: 'bootcamp-cicd-demo-app'            # your App Service name
+
 steps:
-# 1. Install Node.js (your agent already has Node installed, but this ensures consistency)
+# 1. Install Node.js
 - task: NodeTool@0
   inputs:
     versionSpec: '20.x'
@@ -42,7 +47,7 @@ steps:
 # 6. Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: '$(azureServiceConnection)'   # variable for your service connection
-    appName: '$(appServiceName)'                     # variable for your App Service name
+    azureSubscription: '$(azureServiceConnection)'   # must match your service connection name
+    appName: '$(appServiceName)'                     # must match your App Service name
     package: '$(Pipeline.Workspace)/drop/app.zip'
   displayName: 'Deploy to Azure App Service'
