@@ -15,18 +15,9 @@ steps:
       npm install
     displayName: 'Install dependencies'
 
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)/app'
-      includeRootFolder: false
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
-      replaceExistingArchive: true
-    displayName: 'Create app.zip from app folder'
-
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      pathToPublish: '$(Build.SourcesDirectory)'
       artifactName: 'drop'
       publishLocation: 'Container'
-    displayName: 'Publish app.zip as drop artifact'
+    displayName: 'Publish source folder as drop artifact'
