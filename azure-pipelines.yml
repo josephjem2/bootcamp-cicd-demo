@@ -17,12 +17,12 @@ steps:
 
   - script: |
       cd app
-      powershell -Command "Compress-Archive -Path * -DestinationPath ../app.zip"
+      powershell -Command "Compress-Archive -Path * -DestinationPath $(Build.ArtifactStagingDirectory)\app.zip"
     displayName: 'Create ZIP from app folder'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.SourcesDirectory)'
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: 'drop'
       publishLocation: 'Container'
-    displayName: 'Publish ZIP artifact'
+    displayName: 'Publish app.zip as artifact'
