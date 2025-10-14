@@ -1,28 +1,50 @@
 trigger:
-  - main
+- main   # or your default branch
 
 pool:
-  name: Default
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
 
 steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '20.x'
-    displayName: 'Install Node.js'
+# 1. Install Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
 
-  - script: |
-      cd app
-      npm install
-    displayName: 'Install dependencies in app folder'
+# 2. Install dependencies
+- script: |
+    npm install
+  displayName: 'Install npm packages'
 
-  - script: |
-      cd app
-      powershell -Command "Compress-Archive -Path * -DestinationPath $(Build.ArtifactStagingDirectory)\app.zip"
-    displayName: 'Create ZIP from app folder'
+# 3. Run tests (optional)
+- script: |
+    npm test
+  displayName: 'Run tests'
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: 'drop'
-      publishLocation: 'Container'
-    displayName: 'Publish app.zip as artifact'
+# 4. Archive the app (package.json + app.js + node_modules)
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: false
+    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+    replaceExistingArchive: true
+  displayName: 'Archive app files'
+
+# 5. Publish artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: 'Publish build artifact'
+
+# 6. Deploy to Azure App Service
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '<Your-Service-Connection-Name>'
+    appName: '<Your-App-Service-Name>'
+    package: '$(Pipeline.Workspace)/drop/app.zip'
+  displayName: 'Deploy to Azure App Service'
