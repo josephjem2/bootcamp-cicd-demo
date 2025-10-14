@@ -1,11 +1,11 @@
 trigger:
-- main   # or your default branch
+- main   # replace with your actual default branch
 
 pool:
-  name: 'Default'   # replace with your actual pool name
+  name: 'Default'   # or your self-hosted agent pool name
 
 variables:
-  azureServiceConnection: 'AzureBootcampConnection'   # service connection name
+  azureServiceConnection: 'AzureBootcampConnection'   # your service connection name
   appServiceName: 'bootcamp-cicd-demo-app'            # your App Service name
 
 stages:
@@ -17,7 +17,7 @@ stages:
   jobs:
   - job: BuildJob
     pool:
-      name: 'Default'
+      vmImage: 'ubuntu-latest'   # or your agent pool
     steps:
     - task: NodeTool@0
       inputs:
@@ -30,9 +30,10 @@ stages:
     - script: npm test
       displayName: 'Run tests'
 
+    # 👇 Adjust this path if your app.js lives in /src
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)'
+        rootFolderOrFile: '$(Build.SourcesDirectory)/src'
         includeRootFolder: false
         archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
         replaceExistingArchive: true
@@ -54,7 +55,7 @@ stages:
   jobs:
   - job: DeployJob
     pool:
-      name: 'Default'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: DownloadPipelineArtifact@2
       inputs:
@@ -66,6 +67,5 @@ stages:
       inputs:
         azureSubscription: '$(azureServiceConnection)'
         appName: '$(appServiceName)'
-        # Use globbing to find the zip regardless of folder
         package: '$(System.DefaultWorkingDirectory)/**/*.zip'
       displayName: 'Deploy to Azure App Service'
