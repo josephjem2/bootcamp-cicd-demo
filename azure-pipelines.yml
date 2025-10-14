@@ -16,7 +16,6 @@ stages:
   displayName: 'Build and Package'
   jobs:
   - job: BuildJob
-    displayName: 'Build Job'
     pool:
       name: 'Default'
     steps:
@@ -54,7 +53,6 @@ stages:
   dependsOn: Build
   jobs:
   - job: DeployJob
-    displayName: 'Deploy Job'
     pool:
       name: 'Default'
     steps:
@@ -68,6 +66,6 @@ stages:
       inputs:
         azureSubscription: '$(azureServiceConnection)'
         appName: '$(appServiceName)'
-        # Use glob pattern to pick up any .zip in the working directory
+        # Use globbing to find the zip regardless of folder
         package: '$(System.DefaultWorkingDirectory)/**/*.zip'
       displayName: 'Deploy to Azure App Service'
