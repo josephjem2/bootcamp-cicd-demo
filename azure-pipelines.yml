@@ -16,5 +16,5 @@ steps:
     displayName: 'Install dependencies'
 
   - script: |
-      node app.js
-    displayName: 'Start application using app.js'
+      start /B node app.js
+    displayName: 'Start application using app.js in background'
