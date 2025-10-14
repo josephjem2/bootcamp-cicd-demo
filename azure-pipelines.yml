@@ -5,7 +5,9 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  buildConfiguration: 'Release'
+  # Bootcamp-friendly placeholders
+  azureServiceConnection: 'AzureBootcampConnection'   # create this in Project Settings > Service connections
+  appServiceName: 'bootcamp-cicd-demo-app'            # replace with your App Service name
 
 steps:
 # 1. Install Node.js
@@ -44,7 +46,7 @@ steps:
 # 6. Deploy to Azure App Service
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: '<Your-Service-Connection-Name>'
-    appName: '<Your-App-Service-Name>'
+    azureSubscription: '$(azureServiceConnection)'
+    appName: '$(appServiceName)'
     package: '$(Pipeline.Workspace)/drop/app.zip'
   displayName: 'Deploy to Azure App Service'
