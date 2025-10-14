@@ -3,51 +3,73 @@ trigger:
 
 # Use your self-hosted agent pool
 pool:
-  name: 'Default'   # replace with the pool name you registered your agent into
+  name: 'Default'   # replace with the pool name where your agent is registered
 
 variables:
-  # Bootcamp-friendly placeholders
   azureServiceConnection: 'AzureBootcampConnection'   # service connection name from Project Settings
   appServiceName: 'bootcamp-cicd-demo-app'            # your App Service name
 
-steps:
-# 1. Install Node.js
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+stages:
+# -------------------
+# 1. Build Stage
+# -------------------
+- stage: Build
+  displayName: 'Build and Package'
+  jobs:
+  - job: BuildJob
+    displayName: 'Build Job'
+    pool:
+      name: 'Default'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '20.x'
+      displayName: 'Install Node.js'
 
-# 2. Install dependencies
-- script: |
-    npm install
-  displayName: 'Install npm packages'
+    - script: |
+        npm install
+      displayName: 'Install npm packages'
 
-# 3. Run tests (optional)
-- script: |
-    npm test
-  displayName: 'Run tests'
+    - script: |
+        npm test
+      displayName: 'Run tests'
 
-# 4. Archive the app (package.json + app.js + node_modules)
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: false
-    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
-    replaceExistingArchive: true
-  displayName: 'Archive app files'
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.SourcesDirectory)'
+        includeRootFolder: false
+        archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+        replaceExistingArchive: true
+      displayName: 'Archive app files'
 
-# 5. Publish artifact
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-  displayName: 'Publish build artifact'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+      displayName: 'Publish build artifact'
 
-# 6. Deploy to Azure App Service
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: '$(azureServiceConnection)'   # must match your service connection name
-    appName: '$(appServiceName)'                     # must match your App Service name
-    package: '$(Pipeline.Workspace)/drop/app.zip'
+# -------------------
+# 2. Deploy Stage
+# -------------------
+- stage: Deploy
   displayName: 'Deploy to Azure App Service'
+  dependsOn: Build
+  jobs:
+  - job: DeployJob
+    displayName: 'Deploy Job'
+    pool:
+      name: 'Default'
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifactName: 'drop'
+        path: '$(Pipeline.Workspace)'
+      displayName: 'Download build artifact'
+
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: '$(azureServiceConnection)'   # must match your service connection name
+        appName: '$(appServiceName)'                     # must match your App Service name
+        package: '$(Pipeline.Workspace)/drop/app.zip'
+      displayName: 'Deploy to Azure App Service'
