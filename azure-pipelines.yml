@@ -24,11 +24,3 @@ steps:
   - script: |
       dir $(Build.SourcesDirectory)/app
     displayName: 'List files in app folder'
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: '$(Build.SourcesDirectory)/app'
-      artifactName: 'drop'
-      publishLocation: 'Container'
-    displayName: 'Publish Build Artifacts'
-    condition: succeeded()
