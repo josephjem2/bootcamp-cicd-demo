@@ -29,12 +29,8 @@ It is designed for **The Cloud Bootcamp Hands‑on Challenge Day** on CI/CD.
 ## 📂 Project Structure
 
 ```
-bootcamp-cicd-demo/
-├── app.js                # Express app entry point
-├── package.json          # Node.js metadata + start script
-├── azure-pipelines.yml   # CI/CD pipeline definition
-└── README.md             # Documentation
-```
+bootcamp-cicd-demo/ ├── app.js                # Express app entry point ├── package.json          # Node.js metadata + start script ├── azure-pipelines.yml   # CI/CD pipeline definition ├── .gitignore            # Ignore unnecessary files └── README.md             # Documentation
+
 
 ---
 
