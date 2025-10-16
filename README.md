@@ -1,263 +1,227 @@
-# 🚀 Bootcamp CI/CD Demo – Azure DevOps → Azure App Service
+# 🚀 Azure DevOps CI/CD Pipeline: Automating Build and Deployment to Azure App Service
 
-This repository contains a **Node.js + Express demo application** and a ready-to-use **Azure DevOps pipeline** that automates build and deployment to **Azure App Service**.  
-It is designed for **The Cloud Bootcamp Hands‑on Challenge Day** on CI/CD.
+![Azure DevOps](https://img.shields.io/badge/Azure%20DevOps-CI%2FCD-blue?logo=azuredevops)
+![Azure](https://img.shields.io/badge/Azure-App%20Service-0089D6?logo=microsoftazure)
+![Node.js](https://img.shields.io/badge/Node.js-Deploy-green?logo=node.js)
 
----
+## 📖 Overview
+This project demonstrates how to set up a **CI/CD pipeline** in Azure DevOps to automate the build, test, and deployment of a Node.js application to **Azure App Service**.  
 
-## 📖 Context
-
-Modern software delivery relies on **Continuous Integration (CI)** and **Continuous Delivery (CD)**.  
-Instead of manually deploying code, we automate the process:
-
-1. **Developer commits code** → triggers pipeline.  
-2. **Pipeline builds the app** → installs dependencies, runs tests, packages artifact.  
-3. **Pipeline deploys artifact** → pushes to Azure App Service.  
-4. **App Service runs the app** → exposes a public URL + health endpoint.  
-
-This repo demonstrates that full cycle with a **minimal Node.js app** and a **YAML pipeline**.
+You will learn how to:
+- Configure Azure DevOps pipelines (build + release).
+- Package and publish artifacts.
+- Deploy to Azure App Service.
+- Monitor with Application Insights.
+- Troubleshoot common issues systematically.
+- Clean up resources responsibly.
 
 ---
 
-## 🎯 Learning Objectives
-
-By working with this repo, you will:
-
-- Understand the **CI/CD workflow** from commit → build → deploy → live app.  
-- Configure and run an **Azure DevOps pipeline** for Node.js.  
-- Deploy automatically to **Azure App Service (Free F1 plan)**.  
-- Troubleshoot common deployment issues.  
-- Validate deployments with a **health check endpoint**.  
-
----
-
-## 🛠 Prerequisites
-
-Before starting, ensure you have:
-
-- [Node.js 20.x](https://nodejs.org/en/download/) installed locally.  
-- [Git](https://git-scm.com/downloads) installed.  
-- [Azure Subscription](https://azure.microsoft.com/free/) (Free Tier is enough).  
-- [Azure DevOps Organization](https://dev.azure.com/).  
-- A **self‑hosted agent** registered in Azure DevOps (recommended for free tier).  
+## 📑 Table of Contents
+1. [Pipeline Flow](#-pipeline-flow)
+2. [Prerequisites](#%EF%B8%8F-prerequisites)
+3. [Step 1: Configure Build Pipeline](#%EF%B8%8F-step-1-configure-build-pipeline)
+4. [Step 2: Configure Release Pipeline](#-step-2-configure-release-pipeline)
+5. [Step 3: Verify Deployment](#-step-3-verify-deployment)
+6. [Step 4: Monitoring & Observability](#-step-4-monitoring--observability)
+7. [Step 5: Troubleshooting](#%EF%B8%8F-step-5-troubleshooting)
+8. [Step 6: Cleanup](#-step-6-cleanup)
+9. [Hands-On Exercises](#-hands-on-exercises)
+10. [Key Takeaways](#-key-takeaways)
 
 ---
 
-## 📂 Project Structure
+## 🗺️ Pipeline Flow
 
 ```
-bootcamp-cicd-demo/
-├── app.js                # Express app entry point
-├── package.json          # Node.js metadata + start script
-├── azure-pipelines.yml   # CI/CD pipeline definition
-├── .gitignore            # Ignore unnecessary files
-└── README.md             # Documentation
+[ Developer Commit ]
+        |
+        v
+┌───────────────────────┐
+│   Azure DevOps Build  │
+│  - Install Node.js    │
+│  - npm install/test   │
+│  - Package app.zip    │
+└───────────────────────┘
+        |
+        v
+┌───────────────────────┐
+│   Artifact Storage    │
+│   (drop/app.zip)      │
+└───────────────────────┘
+        |
+        v
+┌───────────────────────┐
+│   Azure DevOps Deploy │
+│  - Download artifact  │
+│  - Deploy to AppSvc   │
+└───────────────────────┘
+        |
+        v
+┌───────────────────────┐
+│   Azure App Service   │
+│  - Runs app.js        │
+│  - Exposes URL        │
+│  - /health endpoint   │
+└───────────────────────┘
+        |
+        v
+[ End User Accesses App ]
 ```
 
 ---
 
-## 🚀 Getting Started (Local)
+## ⚙️ Prerequisites
+- Azure subscription with permissions to create App Services.
+- Azure DevOps project with repo + pipeline access.
+- Node.js application (with `package.json` and `/health` endpoint).
+- Git installed locally.
+- Azure CLI installed (`az`).
 
-### 1. Clone the repo
+---
+
+## 🏗️ Step 1: Configure Build Pipeline
+1. In Azure DevOps → Pipelines → New Pipeline.
+2. Connect to your repo.
+3. Use YAML pipeline with steps:
+   - Install Node.js.
+   - Run `npm install` and `npm test`.
+   - Package app into `app.zip`.
+4. Publish artifact to `drop/`.
+
+✅ **Validation:** Build succeeds and `app.zip` appears in Artifacts tab.
+
+---
+
+## 🚀 Step 2: Configure Release Pipeline
+1. Create a Release pipeline in Azure DevOps.
+2. Add **Artifact** → select `drop/app.zip`.
+3. Add **Stage: Deploy to Azure App Service**.
+4. Configure service connection to Azure subscription.
+5. Deploy artifact to App Service.
+
+✅ **Validation:** Deployment logs show success.
+
+---
+
+## 🌐 Step 3: Verify Deployment
+- Visit: `https://<app>.azurewebsites.net/health`
+- Expected response: `200 OK`
+
+✅ **Validation:** App responds successfully.
+
+---
+
+## 📊 Step 4: Monitoring & Observability
+1. Enable **Application Insights** in App Service.
+2. Open **Live Metrics Stream**.
+3. Generate traffic:
+   ```bash
+   for i in {1..20}; do curl https://<app>.azurewebsites.net/health; sleep 1; done
+   ```
+4. Watch request rate and response times update in real time.
+
+✅ **Validation:** Live Metrics shows request activity.
+
+---
+
+## 🛠️ Step 5: Troubleshooting
+
+### Framework
+1. Reproduce issue  
+2. Check basics (URL, service status)  
+3. Read error carefully  
+4. Check logs + metrics  
+5. Isolate problem (code vs config vs platform)  
+6. Apply fix + retest  
+7. Document resolution  
+
+### Common Issues
+<details>
+<summary>🚫 App won’t load in browser</summary>
+
+- Service stopped → Start App Service  
+- Wrong runtime → Update runtime  
+- Missing startup file → Add `web.config` (Windows) or `STARTUP_COMMAND` (Linux)  
+
+</details>
+
+<details>
+<summary>⚠️ Pipeline fails</summary>
+
+- Permission denied → First run requires clicking **Permit**  
+- Missing service connection → Re‑create connection  
+- Build step fails → Check YAML for missing files  
+
+</details>
+
+<details>
+<summary>🛑 App deployed but not starting</summary>
+
+- Tail logs:
+  ```bash
+  az webapp log tail --name <appname> --resource-group <rg>
+  ```
+- Infra logs only → Missing `web.config`  
+- Runtime errors → Fix code/package issues  
+
+</details>
+
+<details>
+<summary>📉 Live Metrics empty</summary>
+
+- Generate traffic → curl `/health`  
+- Restart App Service  
+- Check `APPLICATIONINSIGHTS_CONNECTION_STRING`  
+
+</details>
+
+<details>
+<summary>🔄 Git push rejected</summary>
+
 ```bash
-git clone https://github.com/josephjem2/bootcamp-cicd-demo.git
-cd bootcamp-cicd-demo
+git pull --rebase origin main
+git push origin main
 ```
 
-### 2. Install dependencies
-```bash
-npm install
-```
-
-### 3. Run the app locally
-```bash
-npm start
-```
-
-- Visit: [http://localhost:3000](http://localhost:3000) → `Hello Bootcamp!`  
-- Health check: [http://localhost:3000/health](http://localhost:3000/health) → `OK`  
+</details>
 
 ---
 
-## ⚙️ Azure Setup (Free Tier)
+## 🧹 Step 6: Cleanup
+To avoid unnecessary costs:
 
-### 1. Create an App Service
-- Go to **Azure Portal → Create Resource → Web App**.  
-- **Name:** `bootcamp-cicd-demo-app` (must be unique).  
-- **Runtime stack:** Node.js 20.  
-- **OS:** Windows.  
-- **Plan:** Free (F1).  
+1. **Stop/Delete App Service**  
+   - Portal → App Service → Stop/Delete  
 
-### 2. Configure Health Check
-- App Service → **Monitoring → Health check**.  
-- Enable → Path: `/health`.  
+2. **Remove Application Insights**  
+   - Portal → Application Insights → Delete  
 
----
+3. **Delete Resource Group (fastest)**  
+   ```bash
+   az group delete --name <resource-group-name> --yes --no-wait
+   ```  
 
-## 🔄 Azure DevOps Pipeline Setup
+4. **Clean Azure DevOps Artifacts**  
+   - Delete old pipeline runs/artifacts  
 
-### 1. Create a new project
-- In Azure DevOps, click **New Project**.  
-- Name it `bootcamp-cicd-demo`.  
-
-### 2. Create a Service Connection
-- **Project Settings → Service connections → New → Azure Resource Manager**.  
-- Authentication: Service principal (automatic).  
-- Name: `AzureBootcampConnection`.  
-- Grant access to all pipelines.  
-
-### 3. Confirm Agent Pool
-- **Project Settings → Agent pools → Default → Agents**.  
-- Ensure your self‑hosted agent is **Online**.  
-
-### 4. Add Pipeline YAML
-The pipeline is defined in [`azure-pipelines.yml`](./azure-pipelines.yml).  
-It has two stages: **Build** and **Deploy**.
-
-```yaml
-trigger:
-- main
-
-variables:
-  azureServiceConnection: 'AzureBootcampConnection'
-  appServiceName: 'bootcamp-cicd-demo-app'
-
-stages:
-- stage: Build
-  displayName: 'Build and Package'
-  jobs:
-  - job: BuildJob
-    pool:
-      name: 'Default'
-    steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '20.x'
-      displayName: 'Install Node.js'
-
-    - script: npm install
-      displayName: 'Install npm packages'
-
-    - script: npm test
-      displayName: 'Run tests'
-
-    - task: ArchiveFiles@2
-      inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)'
-        includeRootFolder: false
-        archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
-        replaceExistingArchive: true
-      displayName: 'Archive app files'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
-      displayName: 'Publish build artifact'
-
-- stage: Deploy
-  displayName: 'Deploy to Azure App Service'
-  dependsOn: Build
-  jobs:
-  - job: DeployJob
-    pool:
-      name: 'Default'
-    steps:
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        artifactName: 'drop'
-        targetPath: '$(System.DefaultWorkingDirectory)'
-      displayName: 'Download build artifact'
-
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: '$(azureServiceConnection)'
-        appName: '$(appServiceName)'
-        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-      displayName: 'Deploy to Azure App Service'
-```
-
-### 5. Create Pipeline in DevOps
-- **Pipelines → New Pipeline → GitHub → Select repo → Existing YAML file**.  
-- Run pipeline on `main` branch.  
+✅ **Validation:** Resource group no longer exists, app URL no longer responds.
 
 ---
 
-## ✅ Validation
-
-- **Build stage:** Node.js installed, npm install/test succeeded, artifact published.  
-- **Deploy stage:** Artifact downloaded, deployed to App Service.  
-- **App Service URL:**  
-  - `https://bootcamp-cicd-demo-app.azurewebsites.net` → `Hello Bootcamp!`  
-  - `https://bootcamp-cicd-demo-app.azurewebsites.net/health` → `OK`  
+## 🧑‍💻 Hands-On Exercises
+- Break & Fix: Remove `web.config`, redeploy, troubleshoot.  
+- Pipeline Error: Misconfigure YAML, fix it.  
+- Monitoring Drill: Stop app, observe failures in Live Metrics.  
+- Git Conflict: Trigger push rejection, resolve with rebase.  
 
 ---
 
-## 🧩 Troubleshooting
-
-- **Error: “No hosted parallelism has been purchased”**  
-  → Use a self-hosted agent (`pool: name: 'Default'`).  
-
-- **Error: “You do not have permission to view this directory or page”**  
-  → Ensure `app.js` is at the root of the ZIP and `package.json` has `"start": "node app.js"`.  
-
-- **App not starting**  
-  → Check App Service logs: Portal → Diagnose and solve problems → Log stream.  
-
----
-
-## 📘 About `.gitignore`
-
-This repo includes a `.gitignore` to keep it clean:
-
-- **node_modules/** → Prevents dependency bloat.  
-- **Logs & temp files** → Avoids clutter.  
-- **Build artifacts (`.zip`)** → Generated by pipeline, not stored in Git.  
-- **.env files** → Protects secrets.  
-- **Editor/OS files** → Ignores `.vscode/`, `.DS_Store`, etc.  
-
----
-
-## 🔄 CI/CD Pipeline Flow Diagram
-
-```
-   [ Developer Commit ]
-             |
-             v
-   ┌───────────────────────┐
-   │   Azure DevOps Build  │
-   │  - Install Node.js    │
-   │  - npm install/test   │
-   │  - Package app.zip    │
-   └───────────────────────┘
-             |
-             v
-   ┌───────────────────────┐
-   │   Artifact Storage    │
-   │   (drop/app.zip)      │
-   └───────────────────────┘
-             |
-             v
-   ┌───────────────────────┐
-   │   Azure DevOps Deploy │
-   │  - Download artifact  │
-   │  - Deploy to AppSvc   │
-   └───────────────────────┘
-             |
-             v
-   ┌───────────────────────┐
-   │   Azure App Service   │
-   │  - Runs app.js        │
-   │  - Exposes URL        │
-   │  - /health endpoint   │
-   └───────────────────────┘
-             |
-             v
-   [ End User Accesses App ]
-```
-
----
+## ✅ Key Takeaways
+- CI/CD automates build + deploy, reducing manual errors.  
+- Monitoring with Application Insights provides real‑time visibility.  
+- Troubleshooting is **structured, not guesswork**.  
+- Cleanup is part of the DevOps lifecycle.  
 
 ## 📚 References
 
