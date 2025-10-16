@@ -1,3 +1,5 @@
+`markdown
+
 🚀 Azure DevOps CI/CD Pipeline: Automating Build and Deployment to Azure App Service
 
 !Azure DevOps
@@ -32,6 +34,7 @@ curl https://<app-name>.azurewebsites.net/health
 📖 Full Guide (Step by Step)
 
 1. Prerequisites
+
 - Azure subscription (with permissions to create resources)  
 - Azure DevOps account + project  
 - Node.js installed locally  
@@ -165,7 +168,7 @@ for i in {1..20}; do curl https://<app-name>.azurewebsites.net/health; sleep 1; 
 
 ---
 
-7. Troubleshooting (Objective 9)
+7. Troubleshooting
 
 Framework:  
 1. Reproduce issue  
@@ -188,7 +191,7 @@ Common Issues:
 </details>
 
 <details>
-<summary>⚠️ Pipeline fails</summary>
+<summary>⚠ Pipeline fails</summary>
 
 - Permission denied → Click Permit  
 - Missing service connection → Re‑create  
@@ -229,7 +232,7 @@ git push origin main
 
 ---
 
-8. Cleanup (Don’t Skip!)
+8. Cleanup
 
 1. Stop/Delete App Service  
    - Portal → App Service → Stop/Delete  
@@ -250,6 +253,7 @@ git push origin main
 ---
 
 9. Hands‑On Exercises
+
 - Break & Fix: Remove web.config, redeploy, troubleshoot  
 - Pipeline Error: Misconfigure YAML, fix it  
 - Monitoring Drill: Stop app, observe failures in Live Metrics  
@@ -258,6 +262,7 @@ git push origin main
 ---
 
 🔑 Key Takeaways
+
 - CI/CD automates build + deploy, reducing manual errors  
 - Monitoring with Application Insights provides real‑time visibility  
 - Troubleshooting is structured, not guesswork  
@@ -268,22 +273,30 @@ git push origin main
 📚 References & Resources
 
 🔗 Official Documentation
+
 - Azure DevOps Pipelines  
 - Azure App Service  
 - Application Insights  
 - Azure CLI Reference  
 
 📝 Tutorials & Guides
+
 - Quickstart: Create your first pipeline in Azure DevOps  
 - Deploy a Node.js web app to Azure App Service  
 - Continuous Deployment to Azure App Service  
 
 🎥 Videos & Learning Paths
+
 - Microsoft Learn: Build applications with Azure DevOps  
 - YouTube: Azure DevOps CI/CD Pipeline Tutorials  
 
-🛠️ Tools
+🛠 Tools
+
 - Azure CLI  
 - Git  
 - Node.js  
 `
+
+---  
+
+Let me know if you want me to generate a matching CONTRIBUTING.md, LICENSE, or even a docs/ folder structure to go with it.
