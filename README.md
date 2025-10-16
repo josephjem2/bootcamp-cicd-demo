@@ -263,12 +263,8 @@ Add to your pipeline YAML:
 
 ## 📚 References
 
-- Get started with Azure App Service
-- Build Node.js apps with Azure Pipelines
-- Using Azure’s F1 Free Plan
-- Deploy Node.js Web App with Azure DevOps
-- Video: Build & Deploy Node.js Apps with Azure DevOps
-
----
-
-Would you like this as a downloadable `README.md` file? Or do you want to add images and diagrams from your documentation?
+- [Get started with Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/getting-started)
+- [Build Node.js apps with Azure Pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/javascript?view=azure-devops)
+- [Using Azure’s F1 Free Plan](https://dev.to/dhanushreddy29/using-azures-f1-free-plan-to-host-a-rest-api-3l4m)
+- [Deploy Node.js Web App with Azure DevOps](https://dev.to/s3cloudhub/how-to-deploy-a-nodejs-web-app-on-azure-devops-a-step-by-step-guide-2bf9)
+- [Video: Build & Deploy Node.js Apps with Azure DevOps](https://www.youtube.com/watch?v=fdFENpeQWi0)
