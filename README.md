@@ -1,6 +1,4 @@
-`markdown
-
-🚀 Azure DevOps CI/CD Pipeline: Automating Build and Deployment to Azure App Service
+# 🚀 Azure DevOps CI/CD Pipeline: Automating Build and Deployment to Azure App Service
 
 !Azure DevOps
 !Azure
@@ -297,6 +295,3 @@ git push origin main
 - Node.js  
 `
 
----  
-
-Let me know if you want me to generate a matching CONTRIBUTING.md, LICENSE, or even a docs/ folder structure to go with it.
