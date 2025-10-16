@@ -227,4 +227,3 @@ To avoid unnecessary costs:
 
 - [Get started with Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/getting-started)  
 - [Build Node.js apps with Azure Pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/javascript?view=azure-devops)  
-- [Using Azure’s F1 Free Plan](https://
