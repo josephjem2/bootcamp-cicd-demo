@@ -27,7 +27,7 @@ stages:
     - script: npm test
       displayName: 'Run tests'
 
-    # Stage only the files needed for deployment
+    # Stage all files needed for deployment, including web.config
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
@@ -35,7 +35,8 @@ stages:
           app.js
           package.json
           package-lock.json
-          node_modules/**
+          web.config
+          node_modules/**/*
         TargetFolder: '$(Build.ArtifactStagingDirectory)/app'
       displayName: 'Stage app files'
 
